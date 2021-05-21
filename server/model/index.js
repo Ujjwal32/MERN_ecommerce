@@ -1,7 +1,8 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
 try {
     (async ()=>{
-        await mongoose.connect('mongodb+srv://admin:admin@cluster0.khqok.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+        await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         
     })();
 }catch(err){
