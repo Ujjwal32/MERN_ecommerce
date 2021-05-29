@@ -7,7 +7,7 @@ cloudinary.config({
     api_key: `${process.env.CLOUDINARY_API_KEY}`,
     api_secret: `${process.env.CLOUDINARY_API_SECRET}`,
   });
-  
+  //cloudinary.uploader.destroy('zombie', function(result) { console.log(result) }); zombie - public id
 const Cloudinary = {
     upload: async (
       image,

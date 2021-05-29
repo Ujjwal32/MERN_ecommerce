@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
 
-const { signUp, updateUser, logIn, deleteUser } = require('../controllers/userController')
+const { signUp, updateUser, logIn, deleteUser, getUsers } = require('../controllers/userController')
+const verifyUser = require('../middlewares/verifyUser')
 
 router
     .route('/')
+    .get(verifyUser,getUsers)
     .post(signUp)
 
 router  

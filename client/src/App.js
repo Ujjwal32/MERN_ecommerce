@@ -14,6 +14,8 @@ import ProtectedAdmin from './components/ProtectedAdmin';
 import Forbidden from './pages/Forbidden';
 import Category from './pages/admin/Category';
 import Checkout from './pages/Checkout';
+import SearchedProducts from './pages/SearchedProducts';
+import Orders from './pages/admin/Orders';
 
 function App() {
   return (
@@ -28,9 +30,11 @@ function App() {
         <ProtectedAdmin path='/admin/products' component={Products} />
         <ProtectedAdmin path='/admin/users' component={Users} />
         <ProtectedAdmin path='/admin/category' component={Category} />
+        <ProtectedAdmin path='/admin/orders' component={Orders} />
         <ProtectedRoutes path='/cart' component={Cart}/>
         <Route path='/forbidden' component={Forbidden} />
         <Route path='/checkout' component={Checkout} />
+        <Route path='/search' component={SearchedProducts} />
       </Switch>
     </Router>
   );

@@ -2,7 +2,6 @@ const Product = require('../model/products')
 const path = require('path');
 const Cloudinary = require('../util/cloudinary')
 
-
 const getProducts = async (req,res) => {
     const page = parseInt(req.query.page)
     const limit = parseInt(req.query.limit)
@@ -99,10 +98,33 @@ const getSingleProduct = async (req,res) => {
     }
 }
 
+
+//search products
+
+const searchProducts = async (req,res) => {
+    try{
+        const searchParam = req.query.query
+        const searchedProducts = await Product.find({$text:{$search:searchParam}})
+        // const searchedProducts = await Product.find({tags:{$regex:`.*${searchParam}*.`, $options: "x"}})
+        res.status(200).json({
+            msg: 'Successful',
+            result: {
+                product: searchedProducts
+            }
+        })
+    }catch(err){
+        res.status(500).json({
+            msg: "Internal Server error!",
+            err
+        })
+    }
+}
+
 module.exports = {
     getProducts,
     addProducts,
     editProduct,
     deleteProduct,
-    getSingleProduct
+    getSingleProduct,
+    searchProducts
 }

@@ -27,17 +27,22 @@ function Products() {
     const classes = useStyles();
     const products = useSelector(state => state.product.products[0]?.product)
     const dispatch = useDispatch()
+    const loggedInUser = JSON.parse(sessionStorage.getItem('user-e-commerce'))
 
     const handleCart = (e) => {
-        let element = ''
-        if(e.target.classList.contains('MuiButton-label')){
-            element = e.target.parentElement.parentElement
+        if(loggedInUser){
+            let element = ''
+            if(e.target.classList.contains('MuiButton-label')){
+                element = e.target.parentElement.parentElement
+            } else {
+                element = e.target.parentElement
+            }
+            const id = element.getAttribute('id')
+            const productToCart = products.filter( single => single._id === id)[0]
+            dispatch(addedTocart(productToCart))
         } else {
-            element = e.target.parentElement
+            alert('Please Sign in first.')
         }
-        const id = element.getAttribute('id')
-        const productToCart = products.filter( single => single._id === id)[0]
-        dispatch(addedTocart(productToCart))
     }
 
     return (

@@ -138,9 +138,26 @@ const updateUser = async (req,res) => {
     }
 }
 
+const getUsers = async (req,res) => {
+    try{
+        const users = await User.find()
+        res.status(200).json({
+            msg: 'Successful',
+            result: {
+                user: users
+            }
+        })
+    } catch(err){
+        res.status(503).json({
+            msg: "Something went wrong",
+            error: err
+        })
+    }
+}
 module.exports = {
     signUp,
     logIn,
     deleteUser,
-    updateUser
+    updateUser,
+    getUsers
 }

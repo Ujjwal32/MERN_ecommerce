@@ -36,12 +36,14 @@ function DashboardSidebar() {
                     <ListItemText primary="Category" />
                     </ListItem>
                 </Link>
-                <ListItem button>
-                <ListItemIcon>
-                    <ShopIcon />
-                </ListItemIcon>
-                <ListItemText primary="Orders" />
-                </ListItem>
+                <Link to='/admin/orders'>
+                    <ListItem button>
+                    <ListItemIcon>
+                        <ShopIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Orders" />
+                    </ListItem>
+                </Link>
             </List>
         </div>
     )

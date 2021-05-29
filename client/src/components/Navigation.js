@@ -121,10 +121,11 @@ const useStyles = makeStyles((theme) => ({
       color: 'black'
     }
   }));
-function Navigation() {
+function Navigation(props) {
   const navigation = useRef();
   const classes = useStyles()
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(false);
+  const [search,setSearch] = useState('')
 
   const loggedInUser = JSON.parse(sessionStorage.getItem('user-e-commerce'))
   const cartItems = useSelector(state => state.cart?.items)
@@ -149,6 +150,18 @@ function Navigation() {
       setMobileMoreAnchorEl(false)
     }
   }
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+  }
+  const searchProdcs = (e) => {
+      e.preventDefault(); 
+      if(search === '' ){
+        return
+      } else {
+        window.location.href = `/search?query=${search}`
+      }
+  }
+
   const renderItems = <Box className={classes.sideNav} id='box' ref={navigation}>
     <Link to='/user/login' className={classes.sidenavMenu}>
       <Typography variant="h6" color="inherit">
@@ -187,7 +200,7 @@ function Navigation() {
               </Typography>
             </Link>
             <div className={classes.grow} />
-            <div className={classes.search}>
+            <form className={classes.search} onSubmit={searchProdcs}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -198,9 +211,10 @@ function Navigation() {
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
+                onChange={handleChange}
                 inputProps={{ 'aria-label': 'search' }}
               />
-            </div>
+            </form>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <Link to='/cart' className={classes.anchor}>
