@@ -57,6 +57,29 @@ export const placeOrder = createAsyncThunk('payment/verified',async (data) => {
     })
 })
 
+export const deleteProduct = createAsyncThunk('products/deleted',async (id) => {
+    const session = JSON.parse(sessionStorage.getItem('user-e-commerce'))
+    const userToken = session && session.token
+    await axios.delete(`/products/${id}`,{ headers: {
+        "x-auth": userToken,
+        "Content-Type": "application/json"
+      }}).then( res => {
+        alert(res.data?.err?.name || res.data.msg)
+        window.location.href = '/admin/products'
+      })
+})
+export const deleteCategory = createAsyncThunk('category/deleted',async (id) => {
+    const session = JSON.parse(sessionStorage.getItem('user-e-commerce'))
+    const userToken = session && session.token
+    await axios.delete(`/category/${id}`,{ headers: {
+        "x-auth": userToken,
+        "Content-Type": "application/json"
+      }}).then( res => {
+        alert(res.data?.err?.name || res.data.msg)
+        window.location.href = '/admin/category'
+      })
+})
+
 const initialState = {
     status: '',
     products: [],

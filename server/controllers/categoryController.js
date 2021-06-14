@@ -41,7 +41,7 @@ const deleteCategory = async (req,res) => {
         const deletedItem = await Category.findByIdAndDelete(id)
 
         res.json({
-            msg: 'Category Added!',
+            msg: 'Category Deleted!',
             result: {
                 deletedItem
             }

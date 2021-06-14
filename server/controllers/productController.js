@@ -2,6 +2,8 @@ const Product = require('../model/products')
 const path = require('path');
 const Cloudinary = require('../util/cloudinary')
 
+
+Product.createIndexes({tags: 'text', name: 'text'})
 const getProducts = async (req,res) => {
     const page = parseInt(req.query.page)
     const limit = parseInt(req.query.limit)
@@ -104,8 +106,18 @@ const getSingleProduct = async (req,res) => {
 const searchProducts = async (req,res) => {
     try{
         const searchParam = req.query.query
-        const searchedProducts = await Product.find({$text:{$search:searchParam}})
-        // const searchedProducts = await Product.find({tags:{$regex:`.*${searchParam}*.`, $options: "x"}})
+        
+        // const searchedProducts = await Product.find({tags:{$regex:`.*${searchParam}*.`, $options: "gim"}})
+        const searchedProducts = await Product.aggregate([{
+            $search: {
+              text: {
+                query: searchParam,
+                path: {
+                    'wildcard': '*'
+                  }
+              }
+            }
+          }])
         res.status(200).json({
             msg: 'Successful',
             result: {
@@ -113,6 +125,7 @@ const searchProducts = async (req,res) => {
             }
         })
     }catch(err){
+        console.log(err)
         res.status(500).json({
             msg: "Internal Server error!",
             err

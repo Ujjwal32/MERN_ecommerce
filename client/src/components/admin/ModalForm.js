@@ -6,6 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import { Button, FormControl, Input, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { postProducts } from '../../features/productSlice';
+import useProduct from './useProduct';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -57,21 +58,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function ModalForm({ handleClose,open }) {
+function ModalForm({ handleClose,open,title,id }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const category = useSelector( state => state.product.category[0]?.category)
-
+  const product = useProduct(id)
   const [source, setSource] = useState();
   const [formData, setFormData] = useState({
       name: '',
-      price: '',
-      category: '',
+      price:  '',
+      category:  '',
       descriptions: '',
       image: '',
-      stock: '',
+      stock:  '',
       tags: ''
   })
+
   const closeModal = () => {
     handleClose();
   };
@@ -114,13 +116,13 @@ function ModalForm({ handleClose,open }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Typography variant = 'h5' className={classes.heading} gutterBottom={true}>Add Products</Typography>
+            <Typography variant = 'h5' className={classes.heading} gutterBottom={true}>{title||'Add Products'}</Typography>
             <form className={classes.form} noValidate autoComplete="off" onSubmit={submitHandler}>
-                <Input defaultValue={formData.name} name='name' placeholder='name of the product' onChange={changeHandler}  required/>
-                <Input placeholder="price" name='price' onChange={changeHandler}/>
-                <Input placeholder="stock" name='stock' onChange={changeHandler}/>
-                <Input placeholder="tags - strings separated by space" name='tags' onChange={changeHandler}/>
-                <TextField required multiline  placeholder='description' name='descriptions' onChange={changeHandler}/>
+                <Input defaultValue={product?.name || formData.name} name='name' placeholder='name of the product' onChange={changeHandler}  required/>
+                <Input defaultValue={ product?.price || formData.price} placeholder="price" name='price' onChange={changeHandler}/>
+                <Input defaultValue={ product?.stock || formData.stock} placeholder="stock" name='stock' onChange={changeHandler}/>
+                <Input defaultValue={product?.tags || formData.tags} placeholder="tags - strings separated by space" name='tags' onChange={changeHandler}/>
+                <TextField defaultValue={product?.descriptions || formData.descriptions} required multiline  placeholder='description' name='descriptions' onChange={changeHandler}/>
                 <div className={classes.imageSelect}>
                   <FormControl className={classes.formControl}>
                       <Select

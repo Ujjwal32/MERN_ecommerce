@@ -34,7 +34,7 @@ const OrderSchema = new Schema({
     },
     shippingDetails: shippingSchema,
     totalPrice: Number
-})
+},{timestamps: true})
 
 const Order = mongoose.model('order',OrderSchema);
 module.exports = Order;

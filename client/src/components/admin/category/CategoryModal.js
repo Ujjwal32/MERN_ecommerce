@@ -59,10 +59,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function CategoryModal({ handleClose,open }) {
+function CategoryModal({ handleClose,open,title,editable }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-
   const [name, setName] = useState('')
 
   const closeModal = () => {
@@ -94,9 +93,9 @@ function CategoryModal({ handleClose,open }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Typography variant = 'h5' className={classes.heading} gutterBottom={true}>Add Category</Typography>
+            <Typography variant = 'h5' className={classes.heading} gutterBottom={true}>{title || 'Add Category'}</Typography>
             <form className={classes.form} noValidate autoComplete="off" onSubmit={submitHandler}>
-                <Input defaultValue={name} name='name' placeholder='name of the product' onChange={changeHandler}  required={true}/>
+                <Input defaultValue={editable?.name || name} name='name' placeholder='name of the product' onChange={changeHandler}  required={true}/>
                 <Button type='submit' variant='contained' color='primary' className={classes.button}>Submit</Button>
             </form>
           </div>

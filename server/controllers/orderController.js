@@ -97,6 +97,15 @@ const paymentWithKhalti = async (req,res) => {
         });
 }
 
+
+const getOrderInfo =  async (req,res) => {
+    try{
+        const totalOrders = await Order.count()
+    } catch(err){
+
+    }
+}
+
 module.exports = {
     getOrder,
     getSingleOrder,

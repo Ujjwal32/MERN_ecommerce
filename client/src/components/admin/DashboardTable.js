@@ -1,8 +1,11 @@
 import { Button, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import ModalForm from './ModalForm';
+import {useDispatch} from 'react-redux'
+import { deleteProduct } from '../../features/productSlice'
 
 const useStyles = makeStyles({
     table: {
@@ -24,8 +27,24 @@ const useStyles = makeStyles({
 function DashboardTable() {
     const classes = useStyles()
     const products = useSelector(state => state.product.products[0]?.product)
+    const dispatch = useDispatch()
+    const [status, setStatus] = useState(false)
+    const [id,setId] = useState('')
+
+    const handleClose = () => {
+        setStatus(false)
+    }
+    const openModal = (id) => {
+        setId(id)
+        setStatus(true)
+    }
+
+    const deleteProd = (id) => {
+        dispatch(deleteProduct(id))
+    }
 
     return (
+    <>
     <TableContainer className={classes.table}>
         <Table  component={Paper} aria-label="spanning table">
             <TableHead>
@@ -47,10 +66,10 @@ function DashboardTable() {
                         <TableCell align="right">Rs. {singleProd.price}</TableCell>
                         <TableCell align="right">{singleProd.stock}</TableCell>
                         <TableCell align="right">
-                            <Button color='secondary'>
+                            <Button color='secondary' onClick={() => deleteProd(singleProd._id)}>
                                 <DeleteForever />
                             </Button>
-                            <Button color='secondary'>
+                            <Button color='secondary' onClick = {() => openModal(singleProd._id)}>
                                 <EditIcon />
                             </Button>
                         </TableCell>
@@ -60,6 +79,8 @@ function DashboardTable() {
             </TableBody>
         </Table>
     </TableContainer>   
+    <ModalForm open={status} handleClose={handleClose} title='Edit Product' id={id}/>
+    </>
     )
 }
 

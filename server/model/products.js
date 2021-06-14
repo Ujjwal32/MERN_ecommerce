@@ -28,6 +28,5 @@ const ProductSchema = new Schema({
 
 },{timestamps: true})
 const Product = mongoose.model('product',ProductSchema);
-Product.createIndexes({ tags: 'text'})
 // Product.createIndexes()
 module.exports = Product;
