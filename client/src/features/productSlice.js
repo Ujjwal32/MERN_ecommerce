@@ -27,6 +27,21 @@ export const postProducts = createAsyncThunk('products/postProducts', async (dat
       })
     return products
 })
+export const updateProduct = createAsyncThunk('products/updateProduct', async (data)=> {
+  const session = JSON.parse(sessionStorage.getItem('user-e-commerce'))
+  const userToken = session && session.token
+  const products = await axios.put(`/products/:${data.id}`,data,{ headers: {
+      "x-auth": userToken,
+      "Content-Type": "application/json"
+    }}).then(res => {
+      if(res.data?.msg === 'Successfully added!'){
+        window.location.href = '/admin/products'
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  return products
+})
 
 export const addCategory = createAsyncThunk('category/added', async (name,{ rejectWithValue }) => {
     const session = JSON.parse(sessionStorage.getItem('user-e-commerce'))
@@ -78,6 +93,17 @@ export const deleteCategory = createAsyncThunk('category/deleted',async (id) => 
         alert(res.data?.err?.name || res.data.msg)
         window.location.href = '/admin/category'
       })
+})
+export const updateCategory = createAsyncThunk('category/updated',async (data) => {
+  const session = JSON.parse(sessionStorage.getItem('user-e-commerce'))
+  const userToken = session && session.token
+  await axios.put(`/category/${data.id}`,data,{ headers: {
+      "x-auth": userToken,
+      "Content-Type": "application/json"
+    }},data).then( res => {
+      alert(res.data?.err?.name || res.data.msg)
+      window.location.href = '/admin/category'
+    })
 })
 
 const initialState = {

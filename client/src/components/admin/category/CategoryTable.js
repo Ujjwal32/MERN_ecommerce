@@ -72,7 +72,7 @@ function CategoryTable() {
                 }
             </TableBody>
         </Table>
-        <CategoryModal handleClose={handleClose} open={showModal} title='Edit Category' editable={selectedCat}/>
+        <CategoryModal handleClose={handleClose} open={showModal} title='Edit Category' editable={selectedCat} edit={true}/>
     </TableContainer>   
     )
 }

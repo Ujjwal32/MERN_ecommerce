@@ -79,7 +79,7 @@ function DashboardTable() {
             </TableBody>
         </Table>
     </TableContainer>   
-    <ModalForm open={status} handleClose={handleClose} title='Edit Product' id={id}/>
+    <ModalForm open={status} handleClose={handleClose} title='Edit Product' id={id} edit={true}/>
     </>
     )
 }

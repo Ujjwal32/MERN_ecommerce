@@ -14,7 +14,6 @@ const useProduct = (id) => {
             setProduct([])
         }
     }, [id])
-    console.log(product)
     return product
 }
 

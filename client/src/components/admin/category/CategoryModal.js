@@ -6,7 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import { Button, FormControl, Input, MenuItem, Select, TextField, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { addCategory } from '../../../features/productSlice';
+import { addCategory, updateCategory } from '../../../features/productSlice';
 // import { postProducts } from '../../features/productSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function CategoryModal({ handleClose,open,title,editable }) {
+function CategoryModal({ handleClose,open,title,editable,edit }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [name, setName] = useState('')
@@ -74,6 +74,8 @@ function CategoryModal({ handleClose,open,title,editable }) {
       e.preventDefault();
       if(name === ''){
           alert('Category name cannot be empty. ')
+      } else if(edit === true){
+        dispatch(updateCategory({...editable, name}))
       } else {
           dispatch(addCategory(name))
       }

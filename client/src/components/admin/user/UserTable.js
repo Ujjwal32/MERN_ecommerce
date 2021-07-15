@@ -46,9 +46,6 @@ function UserTable({user}) {
                             <Button color='secondary'>
                                 <DeleteForever />
                             </Button>
-                            <Button color='secondary'>
-                                <EditIcon />
-                            </Button>
                         </TableCell>
                         </TableRow>
                     })

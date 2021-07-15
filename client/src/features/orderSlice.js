@@ -6,6 +6,7 @@ export const fetchOrder = createAsyncThunk('order/fetch',async () => {
     const orders = await axios.get('/order').then( res => {
         return res.data.results.orders
     })
+    console.log(orders)
     return orders
 })
 

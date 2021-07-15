@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function ModalForm({ handleClose,open,title,id }) {
+function ModalForm({ handleClose,open,title,id,edit }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const category = useSelector( state => state.product.category[0]?.category)
@@ -67,13 +67,27 @@ function ModalForm({ handleClose,open,title,id }) {
   const [formData, setFormData] = useState({
       name: '',
       price:  '',
-      category:  '',
+      category: '',
       descriptions: '',
       image: '',
-      stock:  '',
+      stock: '',
       tags: ''
   })
-
+  useEffect(() => {
+    if( edit === true ){
+      setFormData({
+        name: product?.name || '',
+        price:  product?.price || '',
+        category:  product?.category || '',
+        descriptions: product?.descriptions || '',
+        image: product?.image || '',
+        stock:  product?.stock || '',
+        tags: product?.tags || ''
+      })
+      console.log(formData)
+    }
+    console.log('useeffect')
+  },[])
   const closeModal = () => {
     handleClose();
   };
@@ -84,9 +98,13 @@ function ModalForm({ handleClose,open,title,id }) {
       e.preventDefault();
       if(!source){
         alert('Image Required')
+      } 
+      if(edit === true){
+        console.log(formData)
+      } else {
+        const data = { ...formData, image: source}
+        dispatch(postProducts(data))
       }
-      const data = { ...formData, image: source}
-      dispatch(postProducts(data))
   }
 
   const previewFile = (file) => {

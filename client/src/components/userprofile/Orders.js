@@ -31,12 +31,12 @@ function Orders({order}) {
                             {
                                 single.products.map( product => {
                                     return <Card className={classes.cardBody} raised={false} key={product._id}>
-                                    <CardMedia className={classes.image} component="img" alt={product.product.name} height="50%" image={product.product.image}
-                                    title={product.product.name} />
+                                    <CardMedia className={classes.image} component="img" alt={product.product?.name} height="50%" image={product?.product?.image}
+                                    title={product.product?.name} />
                                     <CardContent>
-                                        <Typography gutterBottom variant="subtitle1" component="span">{product.product.name}</Typography>
+                                        <Typography gutterBottom variant="subtitle1" component="span">{product?.product?.name}</Typography>
                                         <Typography variant="body2" color="textSecondary" component="p">
-                                            {product.product.price}
+                                            {product?.product?.price}
                                         </Typography>
                                     </CardContent>
                                     </Card>

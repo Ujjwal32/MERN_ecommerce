@@ -32,7 +32,7 @@ function UserMainArea() {
             </Grid>
             <Grid item md={6}>
                 <Typography className = {classes.header} variant='h5' gutterBottom={true}>Your Orders</Typography>
-                { orders && <Orders order={orders}/> }
+                { orders.length !==0 && <Orders order={orders}/> }
             </Grid>
         </Grid>
     )

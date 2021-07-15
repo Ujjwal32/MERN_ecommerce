@@ -61,7 +61,7 @@ const updateCategory = async (req,res) => {
         const updatedItem = await Category.findByIdAndUpdate(id, {name},{new: true,runValidators: true })
 
         res.json({
-            msg: 'Category Added!',
+            msg: 'Category Updated!',
             result: {
                 updatedItem
             }
