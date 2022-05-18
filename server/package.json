@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
