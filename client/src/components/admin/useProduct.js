@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const useProduct = (id) => {
-    const products = useSelector(state => state.product.products[0]?.product)
-    const [product,setProduct] = useState()
-    
-    useEffect(() => {
-        if(id){
-            const selectedProd = products && products.filter(single => single._id === id)
-             setProduct(selectedProd[0])
-        } else {
-            setProduct([])
-        }
-    }, [id])
-    return product
-}
+  const products = useSelector((state) => state.product.products);
+  const [product, setProduct] = useState();
 
-export default useProduct
+  useEffect(() => {
+    if (id) {
+      const selectedProd =
+        products && products.filter((single) => single._id === id);
+      setProduct(selectedProd[0]);
+    } else {
+      setProduct([]);
+    }
+  }, [id]);
+  return product;
+};
+
+export default useProduct;
