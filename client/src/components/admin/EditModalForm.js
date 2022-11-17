@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, updateProduct } from "../../features/productSlice";
+import { fetchProducts, updateProduct } from "../../features/asyncTaskProduct";
 import useProduct from "./useProduct";
 
 const useStyles = makeStyles((theme) => ({

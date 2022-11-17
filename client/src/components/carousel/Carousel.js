@@ -1,9 +1,9 @@
 import React from "react";
 import Slider from "react-slick";
 import styles from "./carousel.module.css";
-import tshirt from "../../image/tshirt.jpg";
-import sweatshirt from "../../image/sweatshirt-banner.jpg";
-import mens from "../../image/mens-banner.jpg";
+import tshirt from "../../image/tshirt.png";
+import sweatshirt from "../../image/sweatshirt-banner.png";
+import mens from "../../image/mens-banner.png";
 
 function Carousel() {
   const settings = {

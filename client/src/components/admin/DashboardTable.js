@@ -16,7 +16,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteProduct } from "../../features/productSlice";
+import { deleteProduct } from "../../features/asyncTaskProduct";
 import EditModalForm from "./EditModalForm";
 
 const useStyles = makeStyles({

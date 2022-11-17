@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { postProducts } from "../../features/productSlice";
+import { postProducts } from "../../features/asyncTaskProduct";
 
 const useStyles = makeStyles((theme) => ({
   modal: {

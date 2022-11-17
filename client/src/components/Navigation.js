@@ -26,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
       height: "100vh",
       width: "300px",
       top: "10vh",
-      backgroundColor: "#f4f5fd",
       right: "0",
       padding: "20px",
     },
     "& .MuiAppBar-root": {
       height: "10vh",
       justifyContent: "center",
+      backgroundColor: "#4fc4c9",
     },
     "& .MuiAppBar-positionFixed": {
       position: "relative",
