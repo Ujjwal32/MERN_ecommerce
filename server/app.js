@@ -7,6 +7,8 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+const PORT = process.env.PORT || 4000;
+
 app.use(cors());
 // app.use(express.bodyParser({))
 app.use(bodyParser.json({ limit: "10mb" }));
@@ -17,6 +19,6 @@ app.use("/user", userRoutes);
 app.use("/order", orderRoutes);
 app.use("/category", categoryRoutes);
 
-app.listen(4000, () => {
+app.listen(PORT, () => {
   console.log("server started");
 });
