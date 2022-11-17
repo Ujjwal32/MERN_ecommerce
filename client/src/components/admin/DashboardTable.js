@@ -15,6 +15,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { deleteProduct } from "../../features/productSlice";
 import EditModalForm from "./EditModalForm";
 
@@ -81,7 +82,11 @@ function DashboardTable() {
                           alt="thumbnail"
                           className={classes.thumbnail}
                         />
-                        <Typography variant="h6">{singleProd.name}</Typography>
+                        <Link to={`/products/${singleProd.slug}`}>
+                          <Typography variant="h6">
+                            {singleProd.name}
+                          </Typography>
+                        </Link>
                       </TableCell>
                       <TableCell align="right">
                         Rs. {singleProd.price}

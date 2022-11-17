@@ -29,6 +29,7 @@ const ProductSchema = new Schema(
   },
   { timestamps: true }
 );
+// ProductSchema.createIndexes({ tags: "text", name: "text" });
 const Product = mongoose.model("product", ProductSchema);
-// Product.createIndexes()
+Product.createIndexes({ tags: "text", name: "text" });
 module.exports = Product;

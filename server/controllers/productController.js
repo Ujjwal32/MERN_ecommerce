@@ -2,7 +2,6 @@ const Product = require("../model/products");
 const mongoose = require("mongoose");
 const Cloudinary = require("../util/cloudinary");
 
-Product.createIndexes({ tags: "text", name: "text" });
 const getProducts = async (req, res) => {
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
@@ -28,24 +27,19 @@ const getProducts = async (req, res) => {
 const addProducts = async (req, res) => {
   const slug = req.body.name.toLowerCase().split(" ").join("-");
   const user = req.user;
-  console.log("Working backend");
   if (user.role === "admin") {
     try {
       const image = await Cloudinary.upload(req.body.image, "products", {
         height: 600,
         width: 600,
       });
-      console.log(req.body.category_id);
       const product = {
         ...req.body,
         category_id: mongoose.Types.ObjectId(req.body.category_id),
         slug,
         image,
       };
-      console.log(product);
       const newProduct = await Product.create(product);
-      console.log(newProduct);
-
       return res.status(201).json({
         msg: "Successfully added!",
         result: {
@@ -139,18 +133,21 @@ const searchProducts = async (req, res) => {
     const searchParam = req.query.query;
 
     // const searchedProducts = await Product.find({tags:{$regex:`.*${searchParam}*.`, $options: "gim"}})
-    const searchedProducts = await Product.aggregate([
-      {
-        $search: {
-          text: {
-            query: searchParam,
-            path: {
-              wildcard: "*",
-            },
-          },
-        },
-      },
-    ]);
+    const searchedProducts = await Product.find({
+      $text: { $search: searchParam },
+    });
+    // const searchedProducts = await Product.aggregate([
+    //   {
+    //     $search: {
+    //       text: {
+    //         query: searchParam,
+    //         path: {
+    //           wildcard: "*",
+    //         },
+    //       },
+    //     },
+    //   },
+    // ]);
     res.status(200).json({
       msg: "Successful",
       result: {

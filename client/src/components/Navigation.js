@@ -13,7 +13,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuIcon from "@material-ui/icons/Menu";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { useState } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { useSelector } from "react-redux";
@@ -136,6 +136,7 @@ function Navigation(props) {
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(false);
   const [search, setSearch] = useState("");
+  const history = useHistory();
 
   const loggedInUser = JSON.parse(sessionStorage.getItem("user-e-commerce"));
   const cartItems = useSelector((state) => state.cart?.items);
@@ -167,7 +168,10 @@ function Navigation(props) {
     if (search === "") {
       return;
     } else {
-      window.location.href = `/search?query=${search}`;
+      // window.location.href = `/search?query=${search}`;
+      // <Link to={`/search?query=${search}`} />;
+      // <Redirect to={`/search?query=${search}`} />;
+      history.push(`/search?query=${search}`);
     }
   };
 
