@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { URL } from "./constants";
 
 export const addCategory = createAsyncThunk(
   "category/added",
@@ -8,7 +9,7 @@ export const addCategory = createAsyncThunk(
     const userToken = session && session.token;
     const category = await axios
       .post(
-        "/category",
+        `${URL}/category`,
         { name },
         {
           headers: {
@@ -35,7 +36,7 @@ export const deleteCategory = createAsyncThunk(
     const session = JSON.parse(sessionStorage.getItem("user-e-commerce"));
     const userToken = session && session.token;
     await axios
-      .delete(`/category/${id}`, {
+      .delete(`${URL}/category/${id}`, {
         headers: {
           "x-auth": userToken,
           "Content-Type": "application/json",
@@ -54,7 +55,7 @@ export const updateCategory = createAsyncThunk(
     const userToken = session && session.token;
     await axios
       .put(
-        `/category/${data.id}`,
+        `${URL}/category/${data.id}`,
         data,
         {
           headers: {

@@ -109,6 +109,7 @@ function DashboardTable() {
                     </TableRow>
                   );
                 }
+                return <></>;
               })}
           </TableBody>
         </Table>

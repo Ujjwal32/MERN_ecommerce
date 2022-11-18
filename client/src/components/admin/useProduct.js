@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useProduct = (id) => {
   const products = useSelector((state) => state.product.products);
@@ -13,6 +13,7 @@ const useProduct = (id) => {
     } else {
       setProduct([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   return product;
 };

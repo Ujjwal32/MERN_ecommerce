@@ -5,17 +5,15 @@ import {
   postProducts,
   updateProduct,
   deleteProduct,
+  fetchProductsByCategory,
 } from "./asyncTaskProduct";
-import {
-  addCategory,
-  deleteCategory,
-  updateCategory,
-} from "./asyncTaskCategory";
+import { addCategory } from "./asyncTaskCategory";
+import { URL } from "./constants";
 
 export const placeOrder = createAsyncThunk("payment/verified", async (data) => {
   console.log(data);
   await axios
-    .post("/order", data)
+    .post(`${URL}/order`, data)
     .then((res) => {
       alert("Your order has been placed!");
       localStorage.removeItem("cart");
@@ -30,6 +28,7 @@ const initialState = {
   status: "",
   products: [],
   category: [],
+  filtered: [],
 };
 
 const productSlice = createSlice({
@@ -48,6 +47,13 @@ const productSlice = createSlice({
     [fetchProducts.rejected]: (state, action) => {
       state.status = "failed";
       console.log(action.payload);
+    },
+    [fetchProductsByCategory.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [fetchProductsByCategory.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.filtered = action.payload;
     },
     [postProducts.fulfilled]: (state, action) => {
       state.status = "success";

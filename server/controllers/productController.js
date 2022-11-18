@@ -163,6 +163,29 @@ const searchProducts = async (req, res) => {
   }
 };
 
+const getProductsByCategory = async (req, res) => {
+  const category = req.params.category;
+  try {
+    const products = await Product.find({}).populate({
+      path: "category",
+      match: {
+        name: { $eq: category },
+      },
+    });
+    const filteredProducts = products.filter((prod) => prod.category);
+    res.status(200).json({
+      msg: "Successful",
+      result: {
+        product: filteredProducts,
+      },
+    });
+  } catch (err) {
+    res.json({
+      msg: "Something went wrong!".err,
+    });
+  }
+};
+
 module.exports = {
   getProducts,
   addProducts,
@@ -170,4 +193,5 @@ module.exports = {
   deleteProduct,
   getSingleProduct,
   searchProducts,
+  getProductsByCategory,
 };

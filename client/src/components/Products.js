@@ -11,29 +11,30 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addedTocart } from "../features/cartSlice";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     width: "90%",
     marginTop: "20px",
     margin: "0 auto",
   },
+  card: {
+    position: "relative",
+    boxShadow: "none",
+  },
   productTitle: {
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
-  },
-  card: {
-    boxShadow: "none",
+    alignItems: "center",
   },
 }));
 
-function Products() {
+function Products({ products, title }) {
   const classes = useStyles();
-  const products = useSelector((state) => state.product.products);
   const dispatch = useDispatch();
   const loggedInUser = JSON.parse(sessionStorage.getItem("user-e-commerce"));
 
@@ -56,7 +57,7 @@ function Products() {
   return (
     <div className={classes.root}>
       <Typography variant="h5" noWrap gutterBottom={true}>
-        Top Pics
+        {title}
       </Typography>
       <Grid container spacing={3}>
         {products &&
@@ -79,13 +80,6 @@ function Products() {
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
                           {singleProduct.name}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {singleProduct.descriptions}
                         </Typography>
                       </CardContent>
                     </CardActionArea>

@@ -7,8 +7,6 @@ import {
   Button,
   FormControl,
   Input,
-  MenuItem,
-  Select,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -74,7 +72,7 @@ function AddModalForm({ handleClose, open }) {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    category_id: "",
+    category: "",
     descriptions: "",
     image: "",
     stock: "",
@@ -93,8 +91,6 @@ function AddModalForm({ handleClose, open }) {
       return;
     }
     const data = { ...formData, image: source };
-    console.log("Working till submit handler");
-    console.log(data);
     dispatch(postProducts(data)).then(() => closeModal());
   };
 
@@ -174,10 +170,10 @@ function AddModalForm({ handleClose, open }) {
               <div className={classes.imageSelect}>
                 <FormControl className={classes.formControl}>
                   <select
-                    id="category_id"
-                    defaultValue={formData.category_id}
+                    id="category"
+                    defaultValue={formData.category}
                     onChange={changeHandler}
-                    name="category_id"
+                    name="category"
                   >
                     {category &&
                       category.map((single) => (

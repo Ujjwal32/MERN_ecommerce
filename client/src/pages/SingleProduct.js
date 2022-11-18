@@ -49,7 +49,11 @@ function SingleProduct(props) {
           style={{ marginTop: "15vh" }}
         >
           <Grid item md={6} sm={6} className={classes.imageContainer}>
-            <img src={singleProduct[0]?.image || demo} alt="single product" />
+            <img
+              src={singleProduct[0]?.image || demo}
+              alt="single product"
+              style={{ objectFit: "cover" }}
+            />
           </Grid>
           <Grid item md={6} sm={6}>
             <Typography variant="h4" gutterBottom={true}>
@@ -58,7 +62,7 @@ function SingleProduct(props) {
             <Typography variant="h6" gutterBottom={true}>
               Rs.{singleProduct[0]?.price}
             </Typography>
-            <Typography variant="p" conponent="p" paragraph={true}>
+            <Typography component="p" paragraph={true}>
               {singleProduct[0]?.descriptions}
             </Typography>
 

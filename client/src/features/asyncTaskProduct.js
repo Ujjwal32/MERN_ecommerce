@@ -1,13 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { URL } from "./constants";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const products = await axios.get("/products?page=1&limit=5").then((res) => {
-      return res.data.result.product;
-    });
-    const category = await axios.get("/category").then((res) => {
+    const products = await axios
+      .get(`${URL}/products?page=1&limit=8`)
+      .then((res) => {
+        return res.data.result.product;
+      });
+    const category = await axios.get(`${URL}/category`).then((res) => {
       return res.data.result.category;
     });
     return { products, category };
@@ -17,21 +20,17 @@ export const fetchProducts = createAsyncThunk(
 export const postProducts = createAsyncThunk(
   "products/postProducts",
   async (data) => {
-    console.log("Working till start of post product");
     const session = JSON.parse(sessionStorage.getItem("user-e-commerce"));
     const userToken = session && session.token;
-    console.log("working till start of axios");
     const products = await axios
-      .post("/products", data, {
+      .post(`${URL}/products`, data, {
         headers: {
           "x-auth": userToken,
           "Content-Type": "application/json",
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data?.msg === "Successfully added!") {
-          console.log(res);
           return res.data.result.product;
         }
       })
@@ -47,7 +46,7 @@ export const updateProduct = createAsyncThunk(
     const session = JSON.parse(sessionStorage.getItem("user-e-commerce"));
     const userToken = session && session.token;
     const products = await axios
-      .put(`/products/${data._id}`, data, {
+      .put(`${URL}/products/${data._id}`, data, {
         headers: {
           "x-auth": userToken,
           "Content-Type": "application/json",
@@ -71,7 +70,7 @@ export const deleteProduct = createAsyncThunk(
     const session = JSON.parse(sessionStorage.getItem("user-e-commerce"));
     const userToken = session && session.token;
     await axios
-      .delete(`/products/${id}`, {
+      .delete(`${URL}/products/${id}`, {
         headers: {
           "x-auth": userToken,
           "Content-Type": "application/json",
@@ -82,5 +81,17 @@ export const deleteProduct = createAsyncThunk(
         return id;
       })
       .catch((err) => console.log(err));
+  }
+);
+
+export const fetchProductsByCategory = createAsyncThunk(
+  "products/fetchByCategory",
+  async (category) => {
+    const products = await axios
+      .get(`${URL}/products/category/${category}`)
+      .then((res) => {
+        return res.data.result.product;
+      });
+    return products;
   }
 );

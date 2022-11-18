@@ -1,41 +1,74 @@
 import "./App.css";
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import SingleProduct from "./pages/SingleProduct";
-import Cart from "./pages/Cart";
-import Profile from "./pages/Profile";
-import SignIn from "./pages/Signin";
-import SignUp from "./pages/Signup";
-import Dashboard from "./pages/admin/Dashboard";
-import Products from "./pages/admin/Products";
-import Users from "./pages/admin/Users";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import ProtectedAdmin from "./components/ProtectedAdmin";
 import Forbidden from "./pages/Forbidden";
-import Category from "./pages/admin/Category";
-import Checkout from "./pages/Checkout";
-import SearchedProducts from "./pages/SearchedProducts";
-import Orders from "./pages/admin/Orders";
+
+const Home = lazy(() => import("./pages/Home"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const SignIn = lazy(() => import("./pages/Signin"));
+const SignUp = lazy(() => import("./pages/Signup"));
+const Profile = lazy(() => import("./pages/Profile"));
+const SingleProduct = lazy(() => import("./pages/SingleProduct"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const Users = lazy(() => import("./pages/admin/Users"));
+const Orders = lazy(() => import("./pages/admin/Orders"));
+const Products = lazy(() => import("./pages/admin/Products"));
+const Category = lazy(() => import("./pages/admin/Category"));
+const SearchedProducts = lazy(() => import("./pages/SearchedProducts"));
+const FilteredCategoryPage = lazy(() => import("./pages/FilteredCategory"));
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/products/:id" component={SingleProduct} />
-        <ProtectedRoutes path="/user/profile" component={Profile} />
-        <Route path="/user/signin" component={SignIn} />
-        <Route path="/user/signup" component={SignUp} />
-        <ProtectedAdmin exact path="/admin" component={Dashboard} />
-        <ProtectedAdmin path="/admin/products" component={Products} />
-        <ProtectedAdmin path="/admin/users" component={Users} />
-        <ProtectedAdmin path="/admin/category" component={Category} />
-        <ProtectedAdmin path="/admin/orders" component={Orders} />
-        <ProtectedRoutes path="/cart" component={Cart} />
-        <Route path="/forbidden" component={Forbidden} />
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/search" component={SearchedProducts} />
-      </Switch>
+      <Suspense
+        fallback={
+          <div
+            style={{
+              height: "100vh",
+              width: "100vw",
+              backgroundColor: "rgba(182, 186, 189, 0.3)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <iframe
+              src="https://giphy.com/embed/6036p0cTnjUrNFpAlr"
+              width="480"
+              height="480"
+              frameBorder="0"
+              className="giphy-embed"
+              allowFullScreen
+              title="loader"
+            ></iframe>
+          </div>
+        }
+      >
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/products/:id" component={SingleProduct} />
+          <Route path="/user/signin" component={SignIn} />
+          <Route path="/user/signup" component={SignUp} />
+          <ProtectedRoutes path="/user/profile" component={Profile} />
+          <ProtectedAdmin exact path="/admin" component={Dashboard} />
+          <ProtectedAdmin path="/admin/products" component={Products} />
+          <ProtectedAdmin path="/admin/users" component={Users} />
+          <ProtectedAdmin path="/admin/category" component={Category} />
+          <ProtectedAdmin path="/admin/orders" component={Orders} />
+          <ProtectedRoutes path="/cart" component={Cart} />
+          <Route path="/forbidden" component={Forbidden} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/search" component={SearchedProducts} />
+          <Route
+            exact
+            path="/category/:name"
+            component={FilteredCategoryPage}
+          />
+        </Switch>
+      </Suspense>
     </Router>
   );
 }

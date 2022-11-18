@@ -1,0 +1,30 @@
+.category_container {
+    height: 25rem;
+    width: 90%;
+    margin: auto;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.box{
+    position: relative;
+    height: 100%;
+    width: 49%;
+    border-radius: 1rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.box img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.box h1{
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    z-index: 2;
+    color: black;
+}
