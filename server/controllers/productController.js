@@ -133,21 +133,21 @@ const searchProducts = async (req, res) => {
     const searchParam = req.query.query;
 
     // const searchedProducts = await Product.find({tags:{$regex:`.*${searchParam}*.`, $options: "gim"}})
-    const searchedProducts = await Product.find({
-      $text: { $search: searchParam },
-    });
-    // const searchedProducts = await Product.aggregate([
-    //   {
-    //     $search: {
-    //       text: {
-    //         query: searchParam,
-    //         path: {
-    //           wildcard: "*",
-    //         },
-    //       },
-    //     },
-    //   },
-    // ]);
+    // const searchedProducts = await Product.find({
+    //   $text: { $search: searchParam },
+    // });
+    const searchedProducts = await Product.aggregate([
+      {
+        $search: {
+          text: {
+            query: searchParam,
+            path: {
+              wildcard: "*",
+            },
+          },
+        },
+      },
+    ]);
     res.status(200).json({
       msg: "Successful",
       result: {

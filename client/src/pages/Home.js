@@ -8,6 +8,7 @@ import sweatshirtBanner from "../image/Optimized-sweatshirt-banner.jpg";
 import menImage from "../image/menCategory.webp";
 import womenImage from "../image/womenCategory.webp";
 import { useSelector } from "react-redux";
+import Footer from "../components/Footer";
 
 function Home() {
   const products = useSelector((state) => state.product.products);
@@ -20,8 +21,9 @@ function Home() {
         left={{ image: menImage, title: "Men" }}
         right={{ image: womenImage, title: "Women" }}
       />
-      <Products products={products} title="Our Products" />
       <Banner title="Winter Shopping" image={sweatshirtBanner} />
+      <Products products={products} title="Our Products" />
+      <Footer />
     </>
   );
 }
