@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { URL } from "../features/constants";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -55,7 +56,7 @@ function SearchedProducts(props) {
     setProducts(res);
   };
   useEffect(() => {
-    fetchFunction(`/products/search?query=${search}`);
+    fetchFunction(`${URL}/products/search?query=${search}`);
   }, [search]);
   const classes = useStyles();
   const handleCart = (e) => {
