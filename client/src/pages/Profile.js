@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import UserMainArea from "../components/userprofile/UserMainArea";
 import { userLoggedOut } from "../features/userSlice";
@@ -42,11 +43,14 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile() {
   const classes = useStyles();
-  const user = useSelector((state) => state?.user?.user[0]?.user);
+  const user = useSelector((state) => state?.user?.user[0]);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const logout = () => {
-    dispatch(userLoggedOut());
+    dispatch(userLoggedOut()).then(() => {
+      history.replace("/user/sigin", history.goBack());
+    });
   };
   return (
     <>

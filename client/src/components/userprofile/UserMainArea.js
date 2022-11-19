@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 function UserMainArea() {
   const classes = useStyles();
   const [orders, setOrders] = useState([]);
-  const user = useSelector((state) => state.user.user[0]?.user);
+  const user = useSelector((state) => state.user.user[0]);
   const userId = user && user?.id;
   useEffect(() => {
     userId &&

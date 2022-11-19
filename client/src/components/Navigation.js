@@ -133,8 +133,8 @@ function Navigation() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(false);
   const [search, setSearch] = useState("");
   const history = useHistory();
+  const [user, setUser] = useState(null);
 
-  const loggedInUser = JSON.parse(sessionStorage.getItem("user-e-commerce"));
   const cartItems = useSelector((state) => state.cart?.items);
   const noOfcartItems = cartItems && cartItems.length;
 
@@ -145,6 +145,8 @@ function Navigation() {
     setMobileMoreAnchorEl(false);
   };
   useEffect(() => {
+    const loggedInUser = JSON.parse(sessionStorage.getItem("user-e-commerce"));
+    setUser(loggedInUser);
     const handleClickOutside = (e) => {
       if (navigation.current && !navigation.current.contains(e.target)) {
         setMobileMoreAnchorEl(false);
@@ -227,7 +229,7 @@ function Navigation() {
           <div className={classes.sectionDesktop}>
             <Link to="/cart" className={classes.anchor}>
               <IconButton aria-label="show cart items" color="inherit">
-                {loggedInUser ? (
+                {user ? (
                   <Badge badgeContent={noOfcartItems} color="secondary">
                     <ShoppingCartIcon />
                   </Badge>
@@ -236,21 +238,21 @@ function Navigation() {
                 )}
               </IconButton>
             </Link>
-            {!loggedInUser && (
+            {!user && (
               <Link to="/user/signup" className={classes.anchor}>
                 <IconButton color="inherit" className={classes.login}>
                   Sign Up
                 </IconButton>
               </Link>
             )}
-            {!loggedInUser && (
+            {!user && (
               <Link to="/user/signin" className={classes.anchor}>
                 <IconButton color="inherit" className={classes.login}>
                   Login
                 </IconButton>
               </Link>
             )}
-            {loggedInUser && (
+            {user && (
               <Link to="/user/profile" className={classes.anchor}>
                 <IconButton
                   edge="end"

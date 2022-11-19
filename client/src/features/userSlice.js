@@ -10,12 +10,12 @@ const initialState = {
 export const userLoggedIn = createAsyncThunk(
   "user/loggedin",
   async (details) => {
-    axios
+    const user = await axios
       .post(`${URL}/user/login`, details)
       .then((res) => {
         if (res.data.msg === "success") {
           sessionStorage.setItem("user-e-commerce", JSON.stringify(res.data));
-          window.location.href = "/user/profile";
+          return res.data.user;
         } else if (res.data.msg === "Password or email mismatched!") {
           alert("Password or email mismatched!");
         } else {
@@ -25,11 +25,12 @@ export const userLoggedIn = createAsyncThunk(
       .catch((err) => {
         console.log(err);
       });
+    return user;
   }
 );
 export const fetchUser = createAsyncThunk("user/fetched", async () => {
   const user = JSON.parse(sessionStorage.getItem("user-e-commerce"));
-  return user;
+  return user.user;
 });
 export const updateUser = createAsyncThunk(
   "user/updated",
@@ -56,18 +57,28 @@ const userSlice = createSlice({
   reducers: {
     userLoggedOut(state, action) {
       sessionStorage.removeItem("user-e-commerce");
-      window.location.href = "/";
+      state.user = [];
     },
   },
   extraReducers: {
     [fetchUser.pending]: (state, action) => {
-      state.status = "Loading";
+      state.status = "loading";
     },
     [fetchUser.fulfilled]: (state, action) => {
       state.status = "Success";
       state.user = state.user.concat(action.payload);
     },
     [fetchUser.rejected]: (state, action) => {
+      state.status = "rejected";
+    },
+    [userLoggedIn.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [userLoggedIn.fulfilled]: (state, action) => {
+      state.status = "success";
+      state.user = state.user.concat(action.payload);
+    },
+    [userLoggedIn.rejected]: (state, action) => {
       state.status = "rejected";
     },
     [updateUser.pending]: (state, action) => {

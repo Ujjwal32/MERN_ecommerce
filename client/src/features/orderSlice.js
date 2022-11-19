@@ -12,6 +12,7 @@ export const fetchOrder = createAsyncThunk("order/fetch", async () => {
 });
 
 const initialState = {
+  state: "",
   orders: [],
 };
 
@@ -28,7 +29,7 @@ const orderSlice = createSlice({
       state.orders = action.payload;
     },
     [fetchOrder.pending]: (state, action) => {
-      state.status = "something went wrong";
+      state.status = "failed";
     },
   },
 });

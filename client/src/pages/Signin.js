@@ -13,6 +13,7 @@ import { Box } from "@material-ui/core";
 import Navigation from "../components/Navigation";
 import { useDispatch } from "react-redux";
 import { userLoggedIn } from "../features/userSlice";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,6 +51,7 @@ function Copyright() {
 export default function SignIn(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [details, setDetails] = useState({
     email: "",
@@ -61,7 +63,9 @@ export default function SignIn(props) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(userLoggedIn(details));
+    dispatch(userLoggedIn(details)).then(() => {
+      history.replace("/user/sigin", history.goBack());
+    });
   };
   return (
     <>
