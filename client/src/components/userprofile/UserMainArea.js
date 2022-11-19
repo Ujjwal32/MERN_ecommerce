@@ -9,6 +9,8 @@ import { URL } from "../../features/constants";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100%",
+    marginTop: "2.5rem",
+    paddingLeft: "1rem",
   },
   header: {
     textAlign: "center",

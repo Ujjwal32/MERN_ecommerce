@@ -23,9 +23,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     "& .MuiBox-root": {
       zIndex: "2000",
-      height: "100vh",
       width: "300px",
-      top: "10vh",
       right: "0",
       padding: "20px",
     },
@@ -110,25 +108,23 @@ const useStyles = makeStyles((theme) => ({
   login: {
     fontSize: "1.2rem",
   },
-  sideNavclose: {
-    fontSize: "1.2rem",
+  sideNav: {
+    position: "absolute",
+    right: "0",
     width: "100%",
-    textAlign: "start",
-    alignItems: "start",
-    justifyContent: "start",
-    "&:hover": {
-      backgroundColor: "#f4f5fd",
-    },
-    "& .MuiIconButton-label": {
-      marginLeft: "-10px",
-    },
-    "&:active": {
-      backgroundColor: "#f4f5fd",
-    },
+    height: "30rem",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    backgroundColor: "#4fc4c9",
+  },
+  openClose: {
+    cursor: "pointer",
   },
   sidenavMenu: {
     textDecoration: "none",
     color: "black",
+    margin: "0.5rem 0",
   },
 }));
 function Navigation() {
@@ -143,23 +139,23 @@ function Navigation() {
   const noOfcartItems = cartItems && cartItems.length;
 
   const handleMobileMenuOpen = (e) => {
-    setMobileMoreAnchorEl(!mobileMoreAnchorEl);
+    setMobileMoreAnchorEl(true);
   };
   const closeModal = () => {
     setMobileMoreAnchorEl(false);
   };
   useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (navigation.current && !navigation.current.contains(e.target)) {
+        setMobileMoreAnchorEl(false);
+      }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  const handleClickOutside = (e) => {
-    if (navigation.current && !navigation.current.contains(e.target)) {
-      setMobileMoreAnchorEl(false);
-    }
-  };
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
@@ -192,13 +188,6 @@ function Navigation() {
           Cart
         </Typography>
       </Link>
-      <IconButton
-        color="inherit"
-        className={classes.sideNavclose}
-        onClick={closeModal}
-      >
-        <CloseIcon /> Close Modal
-      </IconButton>
     </Box>
   );
   return (
@@ -274,20 +263,18 @@ function Navigation() {
             )}
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton
-              className={classes.login}
-              aria-label="show more"
-              //   aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
+            {!mobileMoreAnchorEl ? (
+              <MenuIcon
+                onClick={handleMobileMenuOpen}
+                className={classes.openClose}
+              />
+            ) : (
+              <CloseIcon onClick={closeModal} className={classes.openClose} />
+            )}
           </div>
         </Toolbar>
       </AppBar>
-      {mobileMoreAnchorEl ? renderItems : ""}
+      {mobileMoreAnchorEl ? renderItems : <></>}
     </div>
   );
 }

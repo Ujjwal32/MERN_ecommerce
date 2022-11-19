@@ -9,10 +9,10 @@
     grid-gap: 1.5rem;
   } 
   .gridItem{
-    height: 35rem;
+    height: 25rem;
   }
   .gridBox {
-    height: 50%;
+    height: 70%;
     width: 100%;
     background-color: rgb(235, 235, 235);
   }
