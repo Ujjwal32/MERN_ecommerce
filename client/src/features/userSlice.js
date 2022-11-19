@@ -76,6 +76,9 @@ const userSlice = createSlice({
     },
     [userLoggedIn.pending]: (state, action) => {
       state.status = "loading";
+      toast.success("Signing in...", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     },
     [userLoggedIn.fulfilled]: (state, action) => {
       state.status = "success";

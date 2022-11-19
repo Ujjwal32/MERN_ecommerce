@@ -37,15 +37,18 @@ const getSingleOrder = async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const order = await Order.find({ user: userId }).populate({
+    const order = await Order.find({
+      user: userId,
+      deliveryStatus: false,
+    }).populate({
       path: "products",
       populate: {
         path: "product",
         model: "product",
         select: "name price image",
-        match: { deliveryStatus: false },
       },
     });
+
     res.json({
       msg: "Successfully fetched order!",
       order,

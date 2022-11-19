@@ -28,7 +28,6 @@ function UserMainArea() {
         setOrders(res.data.order);
       });
   }, [userId]);
-
   return (
     <Grid container className={classes.root}>
       <Grid item md={6}>

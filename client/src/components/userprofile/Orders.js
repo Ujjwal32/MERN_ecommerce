@@ -72,7 +72,8 @@ function Orders({ order }) {
               Total: Rs.{single.totalPrice}
             </Typography>
             <Typography variant="subtitle2" gutterBottom={true}>
-              Amount: {single.payment === "verified" ? "paid" : "due"}
+              Amount: {single.payment === "verified" ? "paid" : "due"} <br />
+              Delivery Status: pending
             </Typography>
           </div>
         ))}

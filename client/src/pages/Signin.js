@@ -66,9 +66,6 @@ export default function SignIn(props) {
     if (status !== "error") {
       dispatch(userLoggedIn(details)).then(({ payload }) => {
         if (payload) {
-          toast.success(msg, {
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
           history.replace("/user/sigin", history.goBack());
         }
       });

@@ -36,7 +36,6 @@ const useStyles = makeStyles(() => ({
 function Products({ products, title }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const loggedInUser = JSON.parse(sessionStorage.getItem("user-e-commerce"));
 
   const handleCart = (e) => {
     let element = "";
