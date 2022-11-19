@@ -1,4 +1,6 @@
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -23,6 +25,7 @@ const FilteredCategoryPage = lazy(() => import("./pages/FilteredCategory"));
 function App() {
   return (
     <Router>
+      <ToastContainer />
       <Suspense
         fallback={
           <div
@@ -58,9 +61,9 @@ function App() {
           <ProtectedAdmin path="/admin/users" component={Users} />
           <ProtectedAdmin path="/admin/category" component={Category} />
           <ProtectedAdmin path="/admin/orders" component={Orders} />
-          <ProtectedRoutes path="/cart" component={Cart} />
+          <Route path="/cart" component={Cart} />
           <Route path="/forbidden" component={Forbidden} />
-          <Route path="/checkout" component={Checkout} />
+          <ProtectedRoutes path="/checkout" component={Checkout} />
           <Route path="/search" component={SearchedProducts} />
           <Route
             exact

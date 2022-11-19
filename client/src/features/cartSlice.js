@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
   status: "",
@@ -22,10 +23,16 @@ const cartSlice = createSlice({
       const id = action.payload._id;
       const result = state.items.some((single) => single._id === id);
       if (result) {
+        toast.success("Item already added to cart.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
         return;
       } else {
         state.items.push({ ...action.payload, quantity: 1 });
         localStorage.setItem("cart", JSON.stringify(state.items));
+        toast.success("Item added to cart.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     },
     changeQuantity(state, action) {

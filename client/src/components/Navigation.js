@@ -229,13 +229,16 @@ function Navigation() {
           <div className={classes.sectionDesktop}>
             <Link to="/cart" className={classes.anchor}>
               <IconButton aria-label="show cart items" color="inherit">
-                {user ? (
+                <Badge badgeContent={noOfcartItems} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+                {/* {user ? (
                   <Badge badgeContent={noOfcartItems} color="secondary">
                     <ShoppingCartIcon />
                   </Badge>
                 ) : (
                   <ShoppingCartIcon />
-                )}
+                )} */}
               </IconButton>
             </Link>
             {!user && (

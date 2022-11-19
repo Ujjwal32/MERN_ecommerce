@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -11,15 +11,14 @@ import Container from "@material-ui/core/Container";
 import Navigation from "../components/Navigation";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { validateSignUp } from "../utils";
+import { toast } from "react-toastify";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="/">
-        Buy It
-      </Link>{" "}
-      {new Date().getFullYear()}
+      <Link to="/">Buy It</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -71,15 +70,10 @@ export default function SignUp() {
     email: "",
     mobile: "",
     password: "",
-    state: "",
-    city: "",
-    street: "",
-    houseNo: "",
     image: "",
   });
 
   const handlefileChange = (e) => {
-    console.log("hmm");
     const file = e.target.files[0];
     previewFile(file);
   };
@@ -96,21 +90,27 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!source) {
-      alert("Image Required");
-    }
     const data = { ...userDetails, image: source };
-
-    axios
-      .post("/user", data)
-      .then((res) => {
-        if (res.data?.msg === "success") {
-          history.go("/user/signin");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    const { status, msg } = validateSignUp(userDetails);
+    if (status !== "error") {
+      axios
+        .post("/user", data)
+        .then((res) => {
+          if (res.data?.msg === "success") {
+            toast.success(msg, {
+              position: toast.POSITION.BOTTOM_CENTER,
+            });
+            history.go("/user/signin");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error(msg, {
+        position: toast.POSITION.BOTTOM_CENTER,
       });
+    }
   };
   return (
     <>
@@ -212,54 +212,6 @@ export default function SignUp() {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="state"
-                  label="state"
-                  type="text"
-                  id="state"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="city"
-                  label="city"
-                  type="text"
-                  id="city"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="street"
-                  label="street"
-                  type="text"
-                  id="street"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="houseNo"
-                  label="house number"
-                  type="text"
-                  id="houseNo"
-                  onChange={handleChange}
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -272,7 +224,7 @@ export default function SignUp() {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/user/signin" variant="body2">
+                <Link to="/user/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

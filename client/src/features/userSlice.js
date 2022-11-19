@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { URL } from "./constants";
+import { toast } from "react-toastify";
 
 const initialState = {
   status: "",
@@ -19,7 +20,9 @@ export const userLoggedIn = createAsyncThunk(
         } else if (res.data.msg === "Password or email mismatched!") {
           alert("Password or email mismatched!");
         } else {
-          alert("User not found");
+          toast.error("User not found", {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         }
       })
       .catch((err) => {
@@ -76,6 +79,7 @@ const userSlice = createSlice({
     },
     [userLoggedIn.fulfilled]: (state, action) => {
       state.status = "success";
+      state.user = [];
       state.user = state.user.concat(action.payload);
     },
     [userLoggedIn.rejected]: (state, action) => {

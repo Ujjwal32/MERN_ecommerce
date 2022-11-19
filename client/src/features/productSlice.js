@@ -9,15 +9,16 @@ import {
 } from "./asyncTaskProduct";
 import { addCategory } from "./asyncTaskCategory";
 import { URL } from "./constants";
+import { toast } from "react-toastify";
 
 export const placeOrder = createAsyncThunk("payment/verified", async (data) => {
-  console.log(data);
   await axios
     .post(`${URL}/order`, data)
     .then((res) => {
-      alert("Your order has been placed!");
+      toast.success("Your order has been placed!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
       localStorage.removeItem("cart");
-      window.location.href = "/";
     })
     .catch((err) => {
       console.log(err);

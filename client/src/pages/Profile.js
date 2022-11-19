@@ -48,9 +48,8 @@ function Profile() {
   const history = useHistory();
 
   const logout = () => {
-    dispatch(userLoggedOut()).then(() => {
-      history.replace("/user/sigin", history.goBack());
-    });
+    dispatch(userLoggedOut());
+    history.replace("/user/sigin", history.goBack());
   };
   return (
     <>
