@@ -18,6 +18,7 @@ import { userLoggedOut } from "../features/userSlice";
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100%",
+    marginTop: "10vh",
   },
   sideNav: {
     backgroundColor: "white",

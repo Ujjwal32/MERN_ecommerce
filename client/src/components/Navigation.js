@@ -28,12 +28,15 @@ const useStyles = makeStyles((theme) => ({
       padding: "20px",
     },
     "& .MuiAppBar-root": {
+      position: "sticky",
+      top: 0,
+      left: 0,
       height: "10vh",
       justifyContent: "center",
       backgroundColor: "#4fc4c9",
     },
     "& .MuiAppBar-positionFixed": {
-      position: "relative",
+      position: "fixed",
     },
   },
   menuButton: {
@@ -43,13 +46,6 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
-    },
-    sideNav: {
-      position: "absolute",
-      height: "100vh",
-      width: "300px",
-      backgroundColor: "#4fc4c9",
-      right: "0",
     },
   },
   search: {
@@ -109,10 +105,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.2rem",
   },
   sideNav: {
-    position: "absolute",
+    position: "fixed",
+    top: "10vh",
     right: "0",
     width: "100%",
-    height: "30rem",
+    height: "110rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
@@ -175,16 +172,26 @@ function Navigation() {
 
   const renderItems = (
     <Box className={classes.sideNav} id="box" ref={navigation}>
-      <Link to="/user/login" className={classes.sidenavMenu}>
-        <Typography variant="h6" color="inherit">
-          Login
-        </Typography>
-      </Link>
-      <Link to="/user/signup" className={classes.sidenavMenu}>
-        <Typography variant="h6" color="inherit">
-          Signup
-        </Typography>
-      </Link>
+      {user ? (
+        <Link
+          to="/user/profile"
+          className={classes.anchor}
+          style={{ color: "black" }}
+        >
+          <Typography variant="h6">Profile</Typography>
+        </Link>
+      ) : (
+        <Link to="/user/login" className={classes.sidenavMenu}>
+          <Typography variant="h6">Login</Typography>
+        </Link>
+      )}
+      {!user && (
+        <Link to="/user/signup" className={classes.sidenavMenu}>
+          <Typography variant="h6" color="inherit">
+            Signup
+          </Typography>
+        </Link>
+      )}
       <Link to="/cart" className={classes.sidenavMenu}>
         <Typography variant="h6" color="inherit">
           Cart
