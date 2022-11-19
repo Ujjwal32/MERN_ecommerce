@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Orders from "./Orders";
 import EditProfile from "./EditProfile";
+import { URL } from "../../features/constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +22,7 @@ function UserMainArea() {
   const userId = user && user?.id;
   useEffect(() => {
     userId &&
-      axios.get(`/order/${userId}`).then((res) => {
+      axios.get(`${URL}/order/${userId}`).then((res) => {
         setOrders(res.data.order);
       });
   }, [userId]);

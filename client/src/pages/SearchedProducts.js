@@ -17,6 +17,7 @@ import {
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { URL } from "../features/constants";
+import Skeleton from "../components/Skeleton";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchedProducts(props) {
+function SearchedProducts() {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
 
@@ -78,7 +79,7 @@ function SearchedProducts(props) {
           Searched for '{search}'
         </Typography>
         <Grid container spacing={3}>
-          {products &&
+          {products.length !== 0 ? (
             products.map((singleProduct) => {
               return (
                 <Grid item lg={3} md={4} xs={6} key={singleProduct._id}>
@@ -122,7 +123,10 @@ function SearchedProducts(props) {
                   </Card>
                 </Grid>
               );
-            })}
+            })
+          ) : (
+            <Skeleton number={8} />
+          )}
         </Grid>
       </div>
     </>

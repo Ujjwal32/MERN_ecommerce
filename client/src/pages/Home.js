@@ -9,6 +9,7 @@ import menImage from "../image/menCategory.webp";
 import womenImage from "../image/womenCategory.webp";
 import { useSelector } from "react-redux";
 import Footer from "../components/Footer";
+import Skeleton from "../components/Skeleton";
 
 function Home() {
   const products = useSelector((state) => state.product.products);
@@ -22,7 +23,11 @@ function Home() {
         right={{ image: womenImage, title: "Women" }}
       />
       <Banner title="Winter Shopping" image={sweatshirtBanner} />
-      <Products products={products} title="Our Products" />
+      {products.length !== 0 ? (
+        <Products products={products} title="Our Products" />
+      ) : (
+        <Skeleton number={8} />
+      )}
       <Footer />
     </>
   );

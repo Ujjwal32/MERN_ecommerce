@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import DashboardSidebar from "../../components/admin/DashboardSidebar";
 import axios from "axios";
 import UserTable from "../../components/admin/user/UserTable";
+import { URL } from "../../features/constants";
 
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
@@ -18,7 +19,7 @@ function Users() {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await axios
-        .get("/user", {
+        .get(`${URL}/user`, {
           headers: {
             "x-auth": userToken,
             "Content-Type": "application/json",
@@ -44,7 +45,7 @@ function Users() {
         <Typography
           variant="h4"
           gutterBottom={true}
-          style={{ textAlign: "center", color: "rgb(70, 245, 245)" }}
+          style={{ textAlign: "center", color: "#4fc4c9" }}
         >
           Users
         </Typography>

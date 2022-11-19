@@ -3,6 +3,7 @@ import { DeleteForever } from '@material-ui/icons';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeQuantity, deleteCartItems, emptyCart } from '../features/cartSlice';
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles({
     table: {
@@ -163,7 +164,7 @@ function TableComponents() {
       return(
         <div className={classes.noItems}>
           <Typography variant='h1' gutterBottom={true}>No items in the cart</Typography>
-          <Button href='/'>Continue Shopping</Button>
+          <Link to="/"><Button>Continue Shopping</Button></Link>
         </div>
       )
     }

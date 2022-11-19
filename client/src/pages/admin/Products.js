@@ -7,11 +7,11 @@ import AddModalForm from "../../components/admin/AddModalForm";
 const useStyles = makeStyles((theme) => ({
   buttonRoot: {
     position: "absolute",
-    color: "rgb(70, 245, 245)",
-    border: "2px solid rgb(70, 245, 245)",
+    color: "#4fc4c9",
+    border: "2px solid #4fc4c9",
     right: theme.spacing(6.5),
     "&:hover": {
-      border: "2px solid rgb(70, 245, 245)",
+      border: "2px solid #4fc4c9",
     },
   },
   gridContainer: {
@@ -38,7 +38,7 @@ function Products() {
         <Typography
           variant="h4"
           gutterBottom={true}
-          style={{ textAlign: "center", color: "rgb(70, 245, 245)" }}
+          style={{ textAlign: "center", color: "#4fc4c9" }}
         >
           Products
         </Typography>

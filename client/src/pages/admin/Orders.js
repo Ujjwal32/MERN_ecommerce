@@ -2,6 +2,7 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import DashboardSidebar from "../../components/admin/DashboardSidebar";
 import axios from "axios";
+import { URL } from "../../features/constants";
 
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
@@ -18,7 +19,7 @@ function Orders() {
   useEffect(() => {
     const fetchOrder = async () => {
       const order = await axios
-        .get("/order", {
+        .get(`${URL}/order`, {
           headers: {
             "x-auth": userToken,
             "Content-Type": "application/json",
@@ -44,7 +45,7 @@ function Orders() {
         <Typography
           variant="h4"
           gutterBottom={true}
-          style={{ textAlign: "center", color: "rgb(70, 245, 245)" }}
+          style={{ textAlign: "center", color: "#4fc4c9" }}
         >
           Orders
         </Typography>

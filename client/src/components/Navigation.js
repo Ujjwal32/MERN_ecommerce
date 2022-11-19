@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
       position: "absolute",
       height: "100vh",
       width: "300px",
-      backgroundColor: "#f4f5fd",
+      backgroundColor: "#4fc4c9",
       right: "0",
     },
   },
@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
   },
 }));
-function Navigation(props) {
+function Navigation() {
   const navigation = useRef();
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(false);
