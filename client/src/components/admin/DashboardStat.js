@@ -20,7 +20,7 @@ function DashboardStat() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.order.orders);
-  console.log(state);
+
   useEffect(() => {
     dispatch(fetchOrder());
     // eslint-disable-next-line react-hooks/exhaustive-deps

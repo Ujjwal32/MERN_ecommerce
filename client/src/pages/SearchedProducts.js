@@ -79,7 +79,7 @@ function SearchedProducts() {
           Searched for '{search}'
         </Typography>
         <Grid container spacing={3}>
-          {products.length !== 0 ? (
+          {products && products.length !== 0 ? (
             products.map((singleProduct) => {
               return (
                 <Grid item lg={3} md={4} xs={6} key={singleProduct._id}>

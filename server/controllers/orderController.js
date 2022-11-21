@@ -6,29 +6,35 @@ const getOrder = async (req, res) => {
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
   const skip = (page - 1) * limit;
-  try {
-    const orders = await Order.find()
-      .populate({
-        path: "products",
-        populate: {
-          path: "product",
-          model: "product",
-          select: "name price image",
+  const user = req.user;
+  if (user.role === "admin") {
+    try {
+      const orders = await Order.find()
+        .populate({
+          path: "products",
+          populate: {
+            path: "product",
+            model: "product",
+          },
+        })
+        .populate("user", "name email")
+        .limit(limit)
+        .skip(skip);
+      res.json({
+        msg: "Successfully fetched orders!",
+        results: {
+          orders,
         },
-      })
-      .populate("user", "name email")
-      .limit(limit)
-      .skip(skip);
-    res.json({
-      msg: "Successfully fetched orders!",
-      results: {
-        orders,
-      },
-    });
-  } catch (err) {
-    console.log(err);
-    res.json({
-      err,
+      });
+    } catch (err) {
+      console.log(err);
+      res.json({
+        err,
+      });
+    }
+  } else {
+    res.status(503).json({
+      msg: "You are not authenticated!",
     });
   }
 };

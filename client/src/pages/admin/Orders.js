@@ -1,41 +1,69 @@
-import { Grid, makeStyles, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import DashboardSidebar from "../../components/admin/DashboardSidebar";
-import axios from "axios";
-import { URL } from "../../features/constants";
+import {
+  Grid,
+  makeStyles,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
     position: "relative",
   },
+  table: {
+    width: "90%",
+    marginTop: "15vh",
+    margin: "0 auto",
+  },
+  orderContainer: {
+    marginTop: "2rem",
+  },
+  orderBtn: {
+    border: "none",
+    width: "4.5rem",
+    height: "2.5rem",
+    cursor: "pointer",
+    "&:focus": {
+      backgroundColor: "#B9D9EB",
+    },
+  },
+  allBtn: {
+    backgroundColor: "#7CB9E8",
+  },
+  deliveredBtn: {
+    backgroundColor: "#0ccf9f",
+    margin: "0 1rem",
+  },
+  pendingBtn: {
+    backgroundColor: "#cfcd0c",
+  },
 }));
 
 function Orders() {
   const classes = useStyles();
-  const [orders, setOrders] = useState();
-  const session = JSON.parse(sessionStorage.getItem("user-e-commerce"));
-  const userToken = session && session.token;
+  const orders = useSelector((state) => state.order.orders);
+  const [filteredOrder, setFilteredOrder] = useState(orders);
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      const order = await axios
-        .get(`${URL}/order`, {
-          headers: {
-            "x-auth": userToken,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((data) => {
-          return data.data.results.orders;
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("something went wrong");
-        });
-      setOrders(order);
-    };
-    fetchOrder();
-  }, [userToken]);
+  const handleFilter = (state) => {
+    if (state === "all") {
+      setFilteredOrder(orders);
+    } else if (state === "delivered") {
+      const deliveredOrders = orders.filter((order) => order.deliveryStatus);
+      setFilteredOrder(deliveredOrders);
+    } else {
+      const pendingOrders = orders.filter((order) => !order.deliveryStatus);
+      setFilteredOrder(pendingOrders);
+    }
+  };
+
   return (
     <Grid container>
       <Grid item xs={3}>
@@ -49,7 +77,59 @@ function Orders() {
         >
           Orders
         </Typography>
-        {orders && <></>}
+        <div className={classes.orderContainer}>
+          <div className={classes.orderTabs}>
+            <button
+              className={`${classes.orderBtn} ${classes.allBtn}`}
+              onClick={() => handleFilter("all")}
+            >
+              All
+            </button>
+            <button
+              className={`${classes.orderBtn} ${classes.deliveredBtn}`}
+              onClick={() => handleFilter("delivered")}
+            >
+              Delivered
+            </button>
+            <button
+              className={`${classes.orderBtn} ${classes.pendingBtn}`}
+              onClick={() => handleFilter("pending")}
+            >
+              Pending
+            </button>
+          </div>
+        </div>
+        <TableContainer className={classes.table}>
+          <Table component={Paper} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Order Id</TableCell>
+                <TableCell>User</TableCell>
+                <TableCell align="right">Number of Items</TableCell>
+                <TableCell align="right">Total Amount</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredOrder &&
+                filteredOrder.map((order) => {
+                  return (
+                    <TableRow key={order._id}>
+                      <TableCell className={classes.tableProduct}>
+                        {order._id}
+                      </TableCell>
+                      <TableCell>{order.user.name}</TableCell>
+                      <TableCell align="right">
+                        Rs. {order.products.length}
+                      </TableCell>
+                      <TableCell align="right">
+                        Rs. {order.totalPrice}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
     </Grid>
   );

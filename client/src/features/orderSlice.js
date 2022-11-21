@@ -4,9 +4,18 @@ import { URL } from "./constants";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 export const fetchOrder = createAsyncThunk("order/fetch", async () => {
-  const orders = await axios.get(`${URL}/order`).then((res) => {
-    return res.data.results.orders;
-  });
+  const session = JSON.parse(sessionStorage.getItem("user-e-commerce"));
+  const userToken = session && session.token;
+  const orders = await axios
+    .get(`${URL}/order`, {
+      headers: {
+        "x-auth": userToken,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      return res.data.results.orders;
+    });
   console.log(orders);
   return orders;
 });
