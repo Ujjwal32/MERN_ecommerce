@@ -34,3 +34,17 @@ export const validateSignin = (user) => {
   }
   return { status: "success", msg: "Signing in..." };
 };
+
+// export const groupBy = function (arr) {
+//   let groupedArr = [];
+//   arr.forEach(function (a) {
+//     //look for an existent group
+//     let grouped = groupedArr.find((g) => g.category === a.category);
+//     if (grouped === undefined) {
+//       grouped = { ["category"]: a.category, products: [] };
+//       groupedArr.push(grouped);
+//     }
+//     grouped.products.push(a);
+//   });
+//   return groupedArr;
+// };

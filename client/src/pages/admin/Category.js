@@ -1,8 +1,10 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import CategoryModal from "../../components/admin/category/CategoryModal";
 import CategoryTable from "../../components/admin/category/CategoryTable";
 import DashboardSidebar from "../../components/admin/DashboardSidebar";
+// import { groupBy } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   buttonRoot: {
@@ -22,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
 function Category() {
   const [showModal, setShowModal] = useState(false);
 
+  // const grouped = groupBy(products);
+  // grouped.forEach((g) => {
+  //   g["category_name"] = category.find((cat) => cat._id === g.category).name;
+  // });
   const handleClick = () => {
     setShowModal(true);
   };

@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   table: {
-    width: "90%",
-    marginTop: "15vh",
-    margin: "0 auto",
+    width: "98%",
+    marginTop: "10vh",
+    marginRight: "1rem",
   },
   orderContainer: {
     marginTop: "2rem",
@@ -119,7 +119,7 @@ function Orders() {
                       </TableCell>
                       <TableCell>{order.user.name}</TableCell>
                       <TableCell align="right">
-                        Rs. {order.products.length}
+                        {order.products.length}
                       </TableCell>
                       <TableCell align="right">
                         Rs. {order.totalPrice}

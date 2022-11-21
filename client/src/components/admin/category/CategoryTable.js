@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 function CategoryTable() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.product.category[0]?.category);
+  const category = useSelector((state) => state.product.category);
 
   const [showModal, setShowModal] = useState(false);
   const [selectedCat, setSelectedCat] = useState({});
