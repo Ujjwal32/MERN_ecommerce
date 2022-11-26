@@ -1,6 +1,5 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import CategoryModal from "../../components/admin/category/CategoryModal";
 import CategoryTable from "../../components/admin/category/CategoryTable";
 import DashboardSidebar from "../../components/admin/DashboardSidebar";

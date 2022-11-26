@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import { DeleteForever } from "@material-ui/icons";
 import React from "react";
+// import { useDispatch } from "react-redux";
+import { deleteUser } from "../../../features/userSlice";
 
 const useStyles = makeStyles({
   table: {
@@ -32,6 +34,7 @@ const useStyles = makeStyles({
 });
 function UserTable({ user }) {
   const classes = useStyles();
+  // const dispatch = useDispatch();
   return (
     <TableContainer className={classes.table}>
       <Table component={Paper} aria-label="spanning table">
@@ -56,11 +59,14 @@ function UserTable({ user }) {
                     <Typography variant="h6">{single.name}</Typography>
                   </TableCell>
                   <TableCell align="right">{single.email}</TableCell>
-                  <TableCell align="right">
-                    <Button color="secondary">
+                  {/* <TableCell align="right">
+                    <Button
+                      color="secondary"
+                      onClick={() => dispatch(deleteUser(single._id))}
+                    >
                       <DeleteForever />
                     </Button>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               );
             })}

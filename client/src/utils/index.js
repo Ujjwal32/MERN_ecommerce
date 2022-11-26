@@ -32,7 +32,7 @@ export const validateSignin = (user) => {
       msg: "Password should be at least 6 character long.",
     };
   }
-  return { status: "success", msg: "Signing in..." };
+  return { status: "success", msg: "Signed up. Login to signin..." };
 };
 
 // export const groupBy = function (arr) {

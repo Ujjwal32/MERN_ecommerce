@@ -9,6 +9,7 @@ import { AccountCircleOutlined } from "@material-ui/icons";
 import React from "react";
 import adminStyle from "./dashboard.module.css";
 import ListIcon from "@material-ui/icons/List";
+import HomeIcon from "@material-ui/icons/Home";
 import ShopIcon from "@material-ui/icons/Shop";
 import CategoryIcon from "@material-ui/icons/Category";
 import { Link } from "react-router-dom";
@@ -24,6 +25,14 @@ function DashboardSidebar() {
         <Link to="/">Buy It</Link>
       </Typography>
       <List component="nav" aria-label="main mailbox folders">
+        <Link to="/admin/">
+          <ListItem button>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+        </Link>
         <Link to="/admin/products">
           <ListItem button>
             <ListItemIcon>

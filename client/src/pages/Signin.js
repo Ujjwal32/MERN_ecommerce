@@ -52,6 +52,7 @@ export default function SignIn(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [isLoading, setLoading] = useState(false);
   const [details, setDetails] = useState({
     email: "",
     password: "",
@@ -64,12 +65,15 @@ export default function SignIn(props) {
     e.preventDefault();
     const { status, msg } = validateSignin(details);
     if (status !== "error") {
+      setLoading(true);
       dispatch(userLoggedIn(details)).then(({ payload }) => {
+        setLoading(false);
         if (payload) {
           history.replace("/user/sigin", history.goBack());
         }
       });
     } else {
+      setLoading(false);
       toast.error(msg, {
         position: toast.POSITION.BOTTOM_CENTER,
       });
@@ -123,7 +127,7 @@ export default function SignIn(props) {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              {!isLoading ? "Sign In" : "Loading..."}
             </Button>
             <Grid container>
               <Grid item xs>

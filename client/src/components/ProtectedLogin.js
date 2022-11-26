@@ -1,29 +1,29 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-const ProtectedRoutes = ({ component: Component, ...rest }) => {
+const ProtectedLogin = ({ component: Component, ...rest }) => {
   const loggedInUser = JSON.parse(sessionStorage.getItem("user-e-commerce"));
   return (
     <Route
       {...rest}
       render={(props) => {
         if (loggedInUser && loggedInUser.length !== 0) {
-          return <Component {...rest} {...props} />;
-        } else {
           return (
             <Redirect
               to={{
-                pathname: "/user/signin",
+                pathname: "/",
                 state: {
                   from: props.location,
                 },
               }}
             />
           );
+        } else {
+          return <Component {...rest} {...props} />;
         }
       }}
     />
   );
 };
 
-export default ProtectedRoutes;
+export default ProtectedLogin;

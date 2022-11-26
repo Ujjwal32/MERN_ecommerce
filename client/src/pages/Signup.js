@@ -13,6 +13,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { validateSignUp } from "../utils";
 import { toast } from "react-toastify";
+import { URL } from "../features/constants";
 
 function Copyright() {
   return (
@@ -65,6 +66,7 @@ export default function SignUp() {
   const history = useHistory();
   const fileRef = useRef(null);
 
+  const [isLoading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
     name: "",
     email: "",
@@ -94,17 +96,22 @@ export default function SignUp() {
     const { status, msg } = validateSignUp(userDetails);
     if (status !== "error") {
       axios
-        .post("/user", data)
+        .post(`${URL}/user`, data)
         .then((res) => {
+          setLoading(true);
           if (res.data?.msg === "success") {
+            setLoading(false);
             toast.success(msg, {
               position: toast.POSITION.BOTTOM_CENTER,
             });
-            history.go("/user/signin");
+            history.push("/user/signin");
           }
         })
         .catch((err) => {
-          console.log(err);
+          setLoading(false);
+          toast.error(err.message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
         });
     } else {
       toast.error(msg, {
@@ -220,7 +227,7 @@ export default function SignUp() {
               color="primary"
               className={classes.submit}
             >
-              Sign Up
+              {!isLoading ? "Sign Up" : "Loading..."}
             </Button>
             <Grid container justify="flex-end">
               <Grid item>

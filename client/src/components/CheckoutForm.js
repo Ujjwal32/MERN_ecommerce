@@ -62,7 +62,7 @@ function CheckoutForm({ user }) {
         totalPrice: totalWithVat,
       })
     ).then(() => {
-      history.replace("/checkout", "/");
+      history.push("/user/profile");
     });
   };
   let config = {

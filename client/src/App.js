@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import ProtectedAdmin from "./components/ProtectedAdmin";
 import Forbidden from "./pages/Forbidden";
+import ProtectedLogin from "./components/ProtectedLogin";
 
 const Home = lazy(() => import("./pages/Home"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -53,8 +54,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/products/:id" component={SingleProduct} />
-          <Route path="/user/signin" component={SignIn} />
-          <Route path="/user/signup" component={SignUp} />
+          <ProtectedLogin path="/user/signin" component={SignIn} />
+          <ProtectedLogin path="/user/signup" component={SignUp} />
           <ProtectedRoutes path="/user/profile" component={Profile} />
           <ProtectedAdmin exact path="/admin" component={Dashboard} />
           <ProtectedAdmin path="/admin/products" component={Products} />

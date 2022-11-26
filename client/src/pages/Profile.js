@@ -70,11 +70,6 @@ function Profile() {
               <ListItem button>
                 <ListItemText primary={`Email: ${user?.email}`} />
               </ListItem>
-              <ListItem button>
-                <ListItemText
-                  primary={`Address: ${user?.city},${user?.street}`}
-                />
-              </ListItem>
 
               <div className={classes.btns}>
                 <Button onClick={logout}>Logout</Button>
